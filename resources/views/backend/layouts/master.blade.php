@@ -36,13 +36,14 @@
   <link rel="stylesheet" href="{{ asset('public/backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('public/backend/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
-<!-------Notify---->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
 <!-------Sweet Alert-------->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
   <!-- jQuery -->
   <script src="{{asset('public/backend/plugins/jquery/jquery.min.js')}}"></script>
+
+  <!-------Notify---->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -53,8 +54,6 @@
 @include('backend.layouts.sidebar')
 @yield('content')
 @include('backend.layouts.footer')
-
-
 
 
 
@@ -124,6 +123,8 @@
 <!-- jquery-validation -->
 <script src="{{ asset('public/backend/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('public/backend/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+<!---------Handlebars---------->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous"></script>
 
 <script>
   $(function () {
@@ -180,6 +181,35 @@
         $('#showImage').attr('src',e.target.result);
       }
       reader.readAsDataURL(e.target.files['0']);
+    });
+  });
+</script>
+
+<!---------DatePicker----------->
+<script>
+  $(function(){
+    $('.singledatepicker').daterangepicker({
+      singleDatePicker:true,
+      showDropdowns:true,
+      autoUpdateInput:false,
+      autoApply:true,
+      locale:{
+        format:'DD-MM-YYYY',
+        daysOfWeek:['Su','Mo','Tu','We','Th','Fr','Sa'],
+        firstDay:0
+      },
+      minDate:'01/01/1930',
+    },
+    function(start){
+      this.element.val(start.format('DD-MM-YYYY'));
+      this.element.parent().parent().removeClass('has-error');
+    },
+    function(chosen_date){
+      this.element.val(chosen_date.format('DD-MM-YYYY'));
+    });
+    $('.singledatepicker').on('apply.daterangepicker',function(ev,picker){
+      $(this).val(picker.startDate.format('DD-MM-YYYY'));
+      $(this).trigger('change');
     });
   });
 </script>
